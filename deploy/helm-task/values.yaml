@@ -1,0 +1,6 @@
+
+
+pathDB: mongodb-deployment-service
+user: admin
+password: ${ME_CONFIG_MONGODB_ADMINPASSWORD}
+

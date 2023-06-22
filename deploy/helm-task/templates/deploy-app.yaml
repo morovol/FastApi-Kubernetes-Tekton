@@ -17,7 +17,7 @@ spec:
           image: morovol/fastapi
           env:
             - name: MONGOHOST
-              value: mongodb-deployment-service
+              value: {{ .Values.pathDB }}
           ports:
             - containerPort: 8000
 

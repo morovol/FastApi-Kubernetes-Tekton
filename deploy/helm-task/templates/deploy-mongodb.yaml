@@ -17,9 +17,12 @@ spec:
           image: mongo:4.4.6-bionic
           env:
             - name: MONGO_INITDB_ROOT_USERNAME
-              value: admin
+              value: {{ .Values.user }}
             - name: MONGO_INITDB_ROOT_PASSWORD
-              value: admin
+              valueFrom:
+                secretKeyRef:
+                  name: app-pass
+                  key: key
           ports:
             - containerPort: 27017
           volumeMounts:

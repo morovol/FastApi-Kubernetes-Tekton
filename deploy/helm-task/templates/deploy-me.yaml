@@ -17,10 +17,15 @@ spec:
           image: mongo-express
           env:
             - name: ME_CONFIG_MONGODB_ADMINUSERNAME
-              value: admin
+              value: {{ .Values.user }}
             - name: ME_CONFIG_MONGODB_ADMINPASSWORD
-              value: admin
-            - name: ME_CONFIG_MONGODB_URL
-              value: mongodb://admin:admin@mongodb-deployment-service:27017/
+              valueFrom:
+                secretKeyRef:
+                  name: app-pass
+                  key: key
+            - name: ME_CONFIG_MONGODB_SERVER
+              value: {{ .Values.pathDB }}
+#            - name: ME_CONFIG_MONGODB_URL
+#              value: mongodb://{{ .Values.user  }}:${ME_CONFIG_MONGODB_ADMINPASSWORD}@{{ .Values.pathDB }}:27017/
           ports:
             - containerPort: 8081
