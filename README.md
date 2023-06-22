@@ -1,1 +1,0 @@
-# FastApi-Kubernetes-Tekton

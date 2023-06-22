@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-me
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-me
+  template:
+    metadata:
+      labels:
+        app: app-me
+    spec:
+      containers:
+        - name: mongo-express
+          image: mongo-express
+          env:
+            - name: ME_CONFIG_MONGODB_ADMINUSERNAME
+              value: admin
+            - name: ME_CONFIG_MONGODB_ADMINPASSWORD
+              value: admin
+            - name: ME_CONFIG_MONGODB_URL
+              value: mongodb://admin:admin@mongodb-deployment-service:27017/
+          ports:
+            - containerPort: 8081

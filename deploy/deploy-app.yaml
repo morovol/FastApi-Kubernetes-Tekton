@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-deploy
+  template:
+    metadata:
+      labels:
+        app: app-deploy
+    spec:
+      containers:
+        - name: app
+          image: morovol/fastapi
+          env:
+            - name: MONGOHOST
+              value: mongodb-deployment-service
+          ports:
+            - containerPort: 8000
+
