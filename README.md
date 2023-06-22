@@ -14,7 +14,7 @@ Cluster created on GCP.
 kubectl
 helm
 Tekton
-# Replace LINK-TO-THE-PACKAGE with the package URL you would like to use.
+Replace LINK-TO-THE-PACKAGE with the package URL you would like to use.
 https://github.com/tektoncd/cli/releases
 curl -LO LINK-TO-THE-PACKAGE
 sudo dpkg -i ./PACKAGE-NAME
@@ -25,6 +25,8 @@ gcloud container clusters create tekton-cluster \
   --num-nodes=<nodes> \
   --region=<location> \
   --workload-pool=<project-id>.svc.id.goog
+
+## Build
   
 kubectl apply --filename https://storage.googleapis.com/tekton-releases/pipeline/latest/release.yaml
 
@@ -38,6 +40,8 @@ kubectl create -f pipe_run_clone.yaml
 
 tkn pipelinerun logs  clone-build-push-run-**** -f
 
+## Deploy
+helm install app ./deploy/helm-task
 
   
   
