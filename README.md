@@ -9,7 +9,7 @@ Task:
 
 Results: building pipeline, running application in cluster.  
 
-##Implementation
+## Implementation
 Cluster created on GCP.  
 kubectl
 helm
