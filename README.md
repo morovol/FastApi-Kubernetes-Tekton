@@ -14,9 +14,9 @@ Cluster created on GCP.
 kubectl  
 Tekton  
 Replace LINK-TO-THE-PACKAGE with the package URL you would like to use.
-https://github.com/tektoncd/cli/releases
-curl -LO LINK-TO-THE-PACKAGE
-sudo dpkg -i ./PACKAGE-NAME
+https://github.com/tektoncd/cli/releases  
+curl -LO LINK-TO-THE-PACKAGE  
+sudo dpkg -i ./PACKAGE-NAME  
 
 gcloud services enable container.googleapis.com
 
