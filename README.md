@@ -11,8 +11,8 @@ Results: building pipeline, running application in cluster.
 
 ## Implementation
 Cluster created on GCP.    
-kubectl  
-Tekton  
+Install kubectl  
+Tekton:  
 Replace LINK-TO-THE-PACKAGE with the package URL you would like to use.
 https://github.com/tektoncd/cli/releases  
 curl -LO LINK-TO-THE-PACKAGE  
