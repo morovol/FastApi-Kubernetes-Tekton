@@ -33,10 +33,10 @@ kubectl apply --filename https://storage.googleapis.com/tekton-releases/pipeline
 tkn hub install task git-clone  
 tkn hub install task kaniko  
 
-kubectl apply -f docker-credentials.yaml    
-kubectl apply -f secrets_git.yaml
-kubectl apply -f pipe_clone.yaml 
-kubectl create -f pipe_run_clone.yaml  
+kubectl apply -f docker-credentials.yaml     
+kubectl apply -f secrets_git.yaml  
+kubectl apply -f pipe_clone.yaml   
+kubectl create -f pipe_run_clone.yaml    
 
 tkn pipelinerun logs  clone-build-push-run-**** -f
 
