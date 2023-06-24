@@ -41,7 +41,7 @@ kubectl create -f pipe_run_clone.yaml
 tkn pipelinerun logs  clone-build-push-run-**** -f
 
 ## Deploy
-kubectl apply -f https://api.hub.tekton.dev/v1/resource/tekton/task/helm-upgrade-from-source/0.1/raw
+kubectl apply -f https://api.hub.tekton.dev/v1/resource/tekton/task/helm-upgrade-from-source/0.1/raw  
 kubectl apply -f volume.yaml  
 kubectl apply -f pvc.yaml  
 kubectl apply -f deploy.yaml  
