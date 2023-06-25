@@ -41,8 +41,14 @@ kubectl create -f pipe_run_clone.yaml
 tkn pipelinerun logs  clone-build-push-run-**** -f
 
 ## Deploy
-kubectl apply -f https://api.hub.tekton.dev/v1/resource/tekton/task/helm-upgrade-from-source/0.1/raw
-helm install app ./deploy/helm-task
+kubectl apply -f https://api.hub.tekton.dev/v1/resource/tekton/task/helm-upgrade-from-source/0.1/raw  
+kubectl apply -f volume.yaml  
+kubectl apply -f pvc.yaml  
+kubectl -n default create serviceaccount helm-pipeline-run-sa  
+kubectl -n default create rolebinding helm-pipeline-run-sa-edit --clusterrole edit --serviceaccount default:helm-pipeline-run-sa -o yaml --dry-run=client | kubectl apply -f -
+kubectl apply -f pipe.yaml
+kubectl apply -f pipe_run.yaml
+
 
   
   
