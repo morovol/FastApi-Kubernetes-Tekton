@@ -1,0 +1,31 @@
+---
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  generateName: helm-upgrade-pipeline-run-
+spec:
+  serviceAccountName: helm-pipeline-run-sa
+  pipelineRef:
+    name: helm-upgrade-test-pipeline
+  podTemplate:
+    securityContext:
+      fsGroup: 65532
+  workspaces:
+  - name: shared-data
+    volumeClaimTemplate:
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
+  - name: git-credentials
+    secret:
+      secretName: git-credentials
+
+  params:
+  - name: repo-url
+    value: git@github.com:morovol/FastApi.git
+  - name: branch-name
+    value: main
+

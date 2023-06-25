@@ -1,54 +1,50 @@
----
+
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
   name: helm-upgrade-test-pipeline
 spec:
+  description: |
+    This pipeline clones a git repo, builds a Docker image with Kaniko and
+    pushes it to a registry
+  params:
+  - name: repo-url
+    type: string
+  - name: branch-name
+    type: string
+    description: The git branch to clone.
   workspaces:
-    - name: shared-workspace
+  - name: shared-data
+  - name: git-credentials
   tasks:
-    - name: fetch-repository
-      taskRef:
-        name: git-clone
-      workspaces:
-        - name: output
-          workspace: shared-workspace
-      params:
-        - name: url
-          value: git@github.com:morovol/FastApi-Kubernetes-Tekton.git
-        - name: subdirectory
-          value: ""
-        - name: deleteExisting
-          value: "true"
-    - name: helm-upgrade-from-source
-      taskRef:
-        name: helm-upgrade-from-source
-      runAfter:
-        - fetch-repository
-      workspaces:
-        - name: source
-          workspace: shared-workspace
-      params:
-        - name: charts_dir
-          value: helm-task
-        - name: release_version
-          value: v1.0.0
-        - name: release_name
-          value: helm-source-sample
-        - name: overwrite_values
-          value: "autoscaling.enabled=true,autoscaling.maxReplicas=3"
-        - name: upgrade_extra_params
-          value: "--force"
----
-apiVersion: tekton.dev/v1beta1
-kind: PipelineRun
-metadata:
-  name: helm-upgrade-test-pipeline-run
-spec:
-  serviceAccountName: helm-pipeline-run-sa
-  pipelineRef:
-    name: helm-upgrade-test-pipeline
-  workspaces:
-    - name: shared-workspace
-      persistentvolumeclaim:
-        claimName: helm-source-pvc
+  - name: fetch-source
+    taskRef:
+      name: git-clone
+    workspaces:
+    - name: output
+      workspace: shared-data
+    - name: ssh-directory
+      workspace: git-credentials
+    params:
+    - name: url
+      value: $(params.repo-url)
+    - name: revision
+      value: $(params.branch-name)
+  - name: helm-upgrade-from-source
+    taskRef:
+      name: helm-upgrade-from-source
+    runAfter: ["fetch-source"]
+    workspaces:
+      - name: source
+        workspace: shared-data
+    params:
+      - name: charts_dir
+        value:  deploy/helm-task
+      - name: release_version
+        value: v1.0.0
+      - name: release_name
+        value: helm-source-sample
+      - name: overwrite_values
+        value: "autoscaling.enabled=true,autoscaling.maxReplicas=3"
+      - name: upgrade_extra_params
+        value: "--force"
