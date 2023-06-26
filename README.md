@@ -45,10 +45,9 @@ kubectl apply -f https://api.hub.tekton.dev/v1/resource/tekton/task/helm-upgrade
 kubectl apply -f volume.yaml  
 kubectl apply -f pvc.yaml  
 kubectl -n default create serviceaccount helm-pipeline-run-sa  
-kubectl -n default create rolebinding helm-pipeline-run-sa-edit --clusterrole edit --serviceaccount default:helm-pipeline-run-sa -o yaml --dry-run=client | kubectl apply -f -
-kubectl apply -f pipe.yaml
-kubectl apply -f pipe_run.yaml
-
+kubectl -n default create rolebinding helm-pipeline-run-sa-edit --clusterrole edit --serviceaccount default:helm-pipeline-run-sa -o yaml --dry-run=client | kubectl apply -f -  
+kubectl apply -f pipe.yaml  
+kubectl apply -f pipe_run.yaml  
 
   
   
